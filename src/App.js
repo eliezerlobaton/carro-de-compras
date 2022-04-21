@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from 'react';
+import Layout from './components/Layout';
+import Navbar from './components/Navbar';
+import Produtos from './components/Produtos';
+import Title from './components/Title';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    produtos: [
+      { name: 'tomate', price: 150, img: '/produtos/tomate.jpg' },
+      { name: 'alface', price: 150, img: '/produtos/alface.jpg' },
+      { name: 'ervilhas', price: 150, img: '/produtos/ervilhas.jpg' },
+    ],
+    carro: [
+      // { name: 'tomate', price: 150, img: '/produtos/tomate.jpg', qtd: 1 },
+    ]
+  }
+
+  agregarAoCarrinho = (produto) => {
+      return this.setState({
+      carro: this.state.carro.concat({
+        ...produto,
+        qtd: 1
+      })
+    })
+  }
+
+  render() {
+    console.log(this.state.carro)
+    return (
+      <div>
+        <Navbar />
+        <Layout>
+          <Title />
+          <Produtos
+            adicionarAoCarrinho={this.agregarAoCarrinho}
+            produtos={this.state.produtos}
+          />
+        </Layout>
+      </div>
+    );
+  }
 }
 
 export default App;
