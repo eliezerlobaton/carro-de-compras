@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import BubbleAlert from './BubbleAlert';
+import DetalhesCarrinho from './DetalhesCarrinho';
 
 const styles = {
   carrinho: {
@@ -20,14 +21,19 @@ const styles = {
 
 class Carrinho extends Component {
   render() {
+    const { carro, eCarrinhoVisivel, mostrarCarrinho } = this.props
+    const qtd = carro.reduce((acc, el) => acc + el.qtd, 0)
     return (
       <div>
         <span style={styles.bubble}>
-          <BubbleAlert value={10} />
+          {qtd !== 0
+            ? <BubbleAlert value={qtd} />
+            : null}
         </span>
-        <button style={styles.carrinho}>
+        <button onClick={mostrarCarrinho} style={styles.carrinho}>
           Carrinho
         </button>
+        {eCarrinhoVisivel ? <DetalhesCarrinho carro={carro} /> : null}
       </div>
     );
   }
